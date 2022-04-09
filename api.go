@@ -10,9 +10,9 @@ import (
 )
 
 func apiLoad(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w = lib.SetCors(w)
 	var (
-		objId string = fmt.Sprintf("%s/%s", *workingDirectory, r.URL.Query().Get("id"))
+		objId string = fmt.Sprintf("%s/%s", *workingDirectory, r.URL.Query().Get(lib.KV_ID))
 		obj   []byte
 		err   error
 	)
@@ -29,9 +29,9 @@ func apiLoad(w http.ResponseWriter, r *http.Request) {
 }
 
 func apiStore(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w = lib.SetCors(w)
 	var (
-		objId string = fmt.Sprintf("%s/%s", *workingDirectory, r.URL.Query().Get("id"))
+		objId string = fmt.Sprintf("%s/%s", *workingDirectory, r.URL.Query().Get(lib.KV_ID))
 		obj   []byte
 		err   error
 	)
@@ -41,7 +41,7 @@ func apiStore(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = os.WriteFile(objId, obj, 0660); err != nil {
+	if err = os.WriteFile(objId, obj, lib.FD_MODE); err != nil {
 		lib.LogError(os.Stderr, "main.apiStore", err)
 	}
 }
