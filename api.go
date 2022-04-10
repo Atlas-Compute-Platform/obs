@@ -1,18 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
 
-	"github.com/Atlas-Compute-Environment/lib"
+	"github.com/Atlas-Compute-Platform/lib"
 )
 
 func apiLoad(w http.ResponseWriter, r *http.Request) {
-	w = lib.SetCors(w)
+	lib.SetCors(&w)
 	var (
-		objId string = fmt.Sprintf("%s/%s", *workingDirectory, r.URL.Query().Get(lib.KV_ID))
+		objId string = r.URL.Query().Get(lib.KEY_ID)
 		obj   []byte
 		err   error
 	)
@@ -29,9 +28,9 @@ func apiLoad(w http.ResponseWriter, r *http.Request) {
 }
 
 func apiStore(w http.ResponseWriter, r *http.Request) {
-	w = lib.SetCors(w)
+	lib.SetCors(&w)
 	var (
-		objId string = fmt.Sprintf("%s/%s", *workingDirectory, r.URL.Query().Get(lib.KV_ID))
+		objId string = r.URL.Query().Get(lib.KEY_ID)
 		obj   []byte
 		err   error
 	)
@@ -43,5 +42,18 @@ func apiStore(w http.ResponseWriter, r *http.Request) {
 
 	if err = os.WriteFile(objId, obj, lib.FD_MODE); err != nil {
 		lib.LogError(os.Stderr, "main.apiStore", err)
+	}
+}
+
+func apiRemove(w http.ResponseWriter, r *http.Request) {
+	lib.SetCors(&w)
+	var (
+		objId string = r.URL.Query().Get(lib.KEY_ID)
+		err   error
+	)
+
+	if err = os.Remove(objId); err != nil {
+		lib.LogError(os.Stderr, "main.apiStore", err)
+		http.NotFound(w, r)
 	}
 }

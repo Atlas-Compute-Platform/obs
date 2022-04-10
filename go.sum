@@ -1,2 +1,4 @@
-github.com/Atlas-Compute-Environment/lib v0.0.0-20220408204843-d613db8b3da2 h1:RhKXxK4hB/0vFtfAgEXR+wV9OHECNBzAzNvg8U/3iHI=
-github.com/Atlas-Compute-Environment/lib v0.0.0-20220408204843-d613db8b3da2/go.mod h1:sJpkJgEtz76yTlN4cMN/jVbG4MsHfZh+2vJG/UBzPvs=
+github.com/Atlas-Compute-Platform/lib v0.0.0-20220409064857-4920dc86363f h1:EUUsqxNG0esxwI8b2J8TuAtBcah2DhpWnovGq1L5G9I=
+github.com/Atlas-Compute-Platform/lib v0.0.0-20220409064857-4920dc86363f/go.mod h1:SxZFX3YoIsvjJ0rkeQ4afFEbgyo1VaCRG2LlBFQs5xM=
+github.com/Atlas-Compute-Platform/lib v0.0.0-20220409213318-f63ce38682f0 h1:JwKS9zD99kTWuOePyThTJdbTWwYrzS36LoOG3uY3E9w=
+github.com/Atlas-Compute-Platform/lib v0.0.0-20220409213318-f63ce38682f0/go.mod h1:SxZFX3YoIsvjJ0rkeQ4afFEbgyo1VaCRG2LlBFQs5xM=

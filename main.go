@@ -10,8 +10,9 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"syscall"
 
-	"github.com/Atlas-Compute-Environment/lib"
+	"github.com/Atlas-Compute-Platform/lib"
 )
 
 var workingDirectory *string
@@ -28,7 +29,11 @@ func main() {
 	flag.Usage = usage
 	flag.Parse()
 
-	if err := os.Chdir(*workingDirectory); err != nil {
+	if err := syscall.Chroot(*workingDirectory); err != nil {
+		lib.LogError(os.Stderr, "main.main", err)
+		os.Exit(1)
+	}
+	if err := os.Chdir("/"); err != nil {
 		lib.LogError(os.Stderr, "main.main", err)
 		os.Exit(1)
 	}
@@ -36,6 +41,7 @@ func main() {
 	http.HandleFunc("/ping", lib.ApiPing)
 	http.HandleFunc("/load", apiLoad)
 	http.HandleFunc("/store", apiStore)
+	http.HandleFunc("/remove", apiRemove)
 
 	http.ListenAndServe(*netAddr, nil)
 }
