@@ -1,5 +1,5 @@
 # Atlas Makefile
-imageName = atobs
+imageName = thedevtop/atobs:latest
 	@echo 'build: Build exectuable'
 	@echo 'clean: Remove exectuable'
 	@echo 'docker: Build Docker image'
