@@ -1,13 +1,12 @@
 package main
 
 /*
-	Atlas Object Storage
+	Atlas Object Store
 	Thijs Haker
 */
 
 import (
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 	"syscall"
@@ -17,25 +16,20 @@ import (
 
 var workingDirectory *string
 
-func usage() {
-	fmt.Fprintf(os.Stderr, "Atlas Object Storage %s\n", lib.VERS)
-	flag.PrintDefaults()
-	os.Exit(1)
-}
-
 func main() {
+	lib.SvcName = "Atlas Object Store"
+	lib.SvcVers = "1.0"
+
 	var netAddr = flag.String("p", lib.PORT, "Specify port")
 	workingDirectory = flag.String("d", ".", "Specify Directory")
-	flag.Usage = usage
+	flag.Usage = lib.Usage
 	flag.Parse()
 
 	if err := syscall.Chroot(*workingDirectory); err != nil {
-		lib.LogError(os.Stderr, "main.main", err)
-		os.Exit(1)
+		lib.LogFatal(os.Stderr, "main.main", err)
 	}
 	if err := os.Chdir("/"); err != nil {
-		lib.LogError(os.Stderr, "main.main", err)
-		os.Exit(1)
+		lib.LogFatal(os.Stderr, "main.main", err)
 	}
 
 	http.HandleFunc("/ping", lib.ApiPing)
